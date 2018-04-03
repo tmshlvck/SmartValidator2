@@ -20,15 +20,13 @@ public class OptionsHandler {
 
     private OptionsHandler(){
 
-        URL url = getClass().getResource("/config.yaml");
-
-        String configFilePath = url.getPath();
+        InputStream in = getClass().getResourceAsStream("/config.yaml");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
         try  {
-            File file = new File(configFilePath);
             rwl.writeLock().lock();
             final ObjectMapper mapper = new ObjectMapper(new YAMLFactory()); // jackson databind
-            options = mapper.readValue(file, ConfigYamlFile.class);
+            options = mapper.readValue(reader, ConfigYamlFile.class);
         } catch (IOException e) {
             e.printStackTrace();
         }finally {

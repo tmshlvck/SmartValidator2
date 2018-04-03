@@ -78,13 +78,6 @@ public class SmartValidator {
             conflictArchivationTask = executor.submit(new ConflictArchiver()); //TODO make sure base tables arent empty
             resolvingArchivationTask = executor.submit(new ResolverArchiver());
 
-            if (isSimulatorMode()) {
-
-            } else {
-
-            }
-
-
         } finally {
             if (conflictArchivationTask != null) {
                 conflictArchivationTask.get();

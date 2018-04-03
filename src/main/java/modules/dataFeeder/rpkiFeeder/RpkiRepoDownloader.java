@@ -25,7 +25,7 @@ public class RpkiRepoDownloader implements Runnable {
         HttpURLConnection rpkiValidatorRestApiConnection = null;
 
         try {
-            url = new URL("http://localhost:9176/export.json");
+            url = new URL("http://localhost:8080/api/export.json");
 
             rpkiValidatorRestApiConnection = (HttpURLConnection) url.openConnection();
             rpkiValidatorRestApiConnection.setRequestMethod("GET");
@@ -49,7 +49,7 @@ public class RpkiRepoDownloader implements Runnable {
                     // Raw string example {"roa":[
                     // {"asn":"44489","prefix":"185.131.60.0/22","maxLength":24,"ta":"RIPE NCC RPKI Root"},
                     // ]}
-                    JSONArray roasArray = jsonObject.getJSONArray("roa");
+                    JSONArray roasArray = jsonObject.getJSONArray("roas");
 
                     try (Connection dbConnection = DbHandler.produceConnection()) {
                         assert dbConnection != null;
@@ -78,7 +78,7 @@ public class RpkiRepoDownloader implements Runnable {
 
                         for (Object value : roasArray) {
                             JSONObject json_roa = (JSONObject) value;
-                            ps.setInt(1, json_roa.getIntValue("asn"));
+                            ps.setInt(1, Integer.parseInt(json_roa.getString("asn").split("AS")[1]));
                             PGobject dummyObject = new PGobject();
                             dummyObject.setType("cidr");
                             dummyObject.setValue(json_roa.getString("prefix"));

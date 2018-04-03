@@ -10,3 +10,6 @@ java -jar "jar name"
 ## Developement:
 1. clone with '--recursive' flag on.
 2. to build - simply run: mvn clean package.
+
+`database.sql` contains a sql dump that is required to create the tables.
+You should do a find and replace for `smart_validator` with the name that you wish to give to your database.
