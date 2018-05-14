@@ -28,7 +28,7 @@ public class BmpFeeder  implements Runnable {
         }
 
         public void start() {
-            URL url = getClass().getResource("/libs/Bmp/bin/smart_validator.py");
+            URL url = getClass().getResource("/libs/Bmp/bin/smartvalidator.py");
             bmpFeederControlThread = new BmpFeederControlThread(url.getPath());
             //TODO: check that this started succesfuly
             scheduledThreadPool.scheduleAtFixedRate(bmpFeederControlThread, 500, 60, TimeUnit.MINUTES);
